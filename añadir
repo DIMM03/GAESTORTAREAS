@@ -1,0 +1,29 @@
+package com.example.gestor_tareas
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
+
+class AddTaskActivity : AppCompatActivity() {
+    private lateinit var titleEditText: EditText
+    private lateinit var descriptionEditText: EditText
+    private lateinit var saveButton: Button
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.disenotarea)
+
+
+        titleEditText = findViewById(R.id.Titulo)
+        descriptionEditText = findViewById(R.id.Descripcion)
+        saveButton = findViewById(R.id.bttnguardar)
+
+        saveButton.setOnClickListener {
+            val title = titleEditText.text.toString()
+            val description = descriptionEditText.text.toString()
+            finish()
+        }
+    }
+}
