@@ -1,0 +1,41 @@
+package com.example.gestor_tareas
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import android.widget.Button
+
+class MainActivity : AppCompatActivity(), TaskAdapter.TaskListener {
+
+    private lateinit var taskManager: TaskManager
+    private lateinit var adapter: TaskAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        taskManager = TaskManager()
+        val recyclerView: RecyclerView = findViewById(R.id.Listatareas)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        adapter = TaskAdapter(taskManager.getAllTasks().toMutableList(), this)
+        recyclerView.adapter = adapter
+
+        findViewById<Button>(R.id.botonañadir).setOnClickListener {
+            val intent = Intent(this, AddTaskActivity::class.java)
+        }
+    }
+
+    override fun onTaskCompleted(taskId: Int) {
+        taskManager.markTaskAsCompleted(taskId)
+        adapter.notifyDataSetChanged()
+    }
+
+    override fun onTaskDeleted(taskId: Int) {
+        taskManager.deleteTask(taskId)
+        adapter.notifyDataSetChanged()
+    }
+
+}
